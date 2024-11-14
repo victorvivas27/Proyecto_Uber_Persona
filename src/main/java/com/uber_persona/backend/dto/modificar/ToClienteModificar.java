@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ToClienteModificar {
     @NotNull(message = "El idCliente es obligatorio")
@@ -25,42 +27,4 @@ public class ToClienteModificar {
     @Pattern(regexp = "^[0-9]{9,10}$", message = "La cédula debe tener entre 9 y 10 dígitos numéricos")
     private Long cedula;
 
-    public ToClienteModificar(Long idCliente, String nombre, String apellido, Long cedula) {
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.cedula = cedula;
-    }
-
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Long getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(Long cedula) {
-        this.cedula = cedula;
-    }
 }
