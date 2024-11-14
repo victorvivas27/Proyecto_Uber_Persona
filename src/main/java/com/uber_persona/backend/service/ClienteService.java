@@ -7,6 +7,7 @@ import com.uber_persona.backend.entity.Cliente;
 import com.uber_persona.backend.exception.ClienteExistenteException;
 import com.uber_persona.backend.interfaces.ICliente;
 import com.uber_persona.backend.repository.ClienteRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
+@Transactional
 public class ClienteService implements ICliente {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
     private final ClienteRepository clienteRepository;
@@ -35,8 +36,9 @@ public class ClienteService implements ICliente {
             throw new ClienteExistenteException("La cédula ya existe en el sistema");
         }
         Cliente clienteCreado = clienteRepository.save(cliente);
+        LOGGER.info("Cliente creado con ID: " + clienteCreado.getIdCliente());
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
-        LOGGER.info(toClienteSalida.toString());
+        LOGGER.info("DTO generado: " + toClienteSalida);
         return toClienteSalida;
     }
 

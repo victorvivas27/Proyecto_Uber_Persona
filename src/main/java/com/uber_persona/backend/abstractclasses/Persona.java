@@ -14,6 +14,16 @@ public abstract class Persona {
     @Column(name = "CEDULA", length = 15, nullable = false, unique = true)
     private Long cedula;
 
+    public Persona(Long idCliente, String nombre, String apellido, Long cedula) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+    }
+
+    public Persona() {
+    }
+
     public String getNombre() {
         return nombre;
     }

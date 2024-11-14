@@ -13,6 +13,9 @@ public class ToClienteSalida {
         this.cedula = cedula;
     }
 
+    public ToClienteSalida() {
+    }
+
     public Long getIdCliente() {
         return idCliente;
     }
@@ -37,7 +40,20 @@ public class ToClienteSalida {
         return cedula;
     }
 
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public void setCedula(Long cedula) {
         this.cedula = cedula;
+    }
+    @Override
+    public String toString() {
+        return "ToClienteSalida{" +
+                "idCliente=" + idCliente +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", cedula=" + cedula +
+                '}';
     }
 }

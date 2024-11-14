@@ -23,7 +23,7 @@ public class ClienteController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<ApiResponse<ToClienteSalida>> crearCliente(@Valid @RequestBody ToClienteEntrada toClienteEntrada) {
+    public ResponseEntity<?> crearCliente(@RequestBody @Valid ToClienteEntrada toClienteEntrada) {
         ToClienteSalida toClienteSalida = clienteService.crearCliente(toClienteEntrada);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
