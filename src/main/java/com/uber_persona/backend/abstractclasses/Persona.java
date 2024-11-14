@@ -1,8 +1,14 @@
 package com.uber_persona.backend.abstractclasses;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public abstract class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,43 +19,4 @@ public abstract class Persona {
     private String apellido;
     @Column(name = "CEDULA", length = 15, nullable = false, unique = true)
     private Long cedula;
-
-    public Persona(Long idCliente, String nombre, String apellido, Long cedula) {
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.cedula = cedula;
-    }
-
-    public Persona() {
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Long getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(Long cedula) {
-        this.cedula = cedula;
-    }
 }
