@@ -2,6 +2,7 @@ package com.uber_persona.backend.controller;
 
 import com.uber_persona.backend.dto.entrada.ToClienteEntrada;
 import com.uber_persona.backend.dto.salida.ToClienteSalida;
+import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.service.ClienteService;
 import com.uber_persona.backend.util.ApiResponse;
 import jakarta.validation.Valid;
@@ -42,6 +43,20 @@ public class ClienteController {
         } catch (MappingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), null));
+        }
+    }
+
+    @GetMapping("/buscar/{idCliente}")
+    public ResponseEntity<ApiResponse<ToClienteSalida>>buscarClienteID(@PathVariable Long idCliente){
+        try {
+            ToClienteSalida toClienteSalida = clienteService.obtenerClientePorId(idCliente);
+            ApiResponse<ToClienteSalida> response =
+                    new ApiResponse<>("Cliente encontrado", HttpStatus.OK.value(), toClienteSalida);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch ( ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                   .body(new ApiResponse<>(e.getMessage(), HttpStatus.NOT_FOUND.value(), null));
         }
     }
 }
