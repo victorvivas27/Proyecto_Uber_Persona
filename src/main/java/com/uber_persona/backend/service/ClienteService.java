@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -40,7 +41,9 @@ public class ClienteService implements ICliente {
 
     @Override
     public List<ToClienteSalida> listarClientes() {
-        return List.of();
+       List<Cliente> clientes =clienteRepository.findAll();
+       return  clientes.stream().map(cliente -> modelMapper.map(cliente,ToClienteSalida.class))
+               .collect(Collectors.toList());
     }
 
     @Override
