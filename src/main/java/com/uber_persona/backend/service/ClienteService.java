@@ -41,9 +41,9 @@ public class ClienteService implements ICliente {
 
     @Override
     public List<ToClienteSalida> listarClientes() {
-       List<Cliente> clientes =clienteRepository.findAll();
-       return  clientes.stream().map(cliente -> modelMapper.map(cliente,ToClienteSalida.class))
-               .collect(Collectors.toList());
+        List<Cliente> clientes = clienteRepository.findAll();
+        return clientes.stream().map(cliente -> modelMapper.map(cliente, ToClienteSalida.class))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.util.List;
 public class ClienteController {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClienteController.class);
     private final ClienteService clienteService;
+
     @PostMapping("/crear")
     public ResponseEntity<?> crearCliente(@RequestBody @Valid ToClienteEntrada toClienteEntrada) {
         ToClienteSalida toClienteSalida = clienteService.crearCliente(toClienteEntrada);
@@ -29,17 +30,18 @@ public class ClienteController {
                 .status(HttpStatus.CREATED)
                 .body(new ApiResponse<>("Cliente Creado", HttpStatus.CREATED.value(), toClienteSalida));
     }
+
     @GetMapping("/listar")
     public ResponseEntity<ApiResponse<List<ToClienteSalida>>> listarClientes() {
-        try{
-            List<ToClienteSalida>toClienteSalidas=clienteService.listarClientes();
-            ApiResponse<List<ToClienteSalida>> response=
-                    new ApiResponse<>("Lista de clientes exitosa",HttpStatus.OK.value(),toClienteSalidas );
+        try {
+            List<ToClienteSalida> toClienteSalidas = clienteService.listarClientes();
+            ApiResponse<List<ToClienteSalida>> response =
+                    new ApiResponse<>("Lista de clientes exitosa", HttpStatus.OK.value(), toClienteSalidas);
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
-        }catch (MappingException e){
-            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value(), null));
+        } catch (MappingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), null));
         }
     }
 }

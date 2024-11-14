@@ -21,6 +21,7 @@ public class GlobalExeceptionHandler {
     public ApiResponse<String> manejarResourceNotFound(ResourceNotFoundException exception) {
         return new ApiResponse<>(exception.getMessage(), HttpStatus.NOT_FOUND.value(), null);
     }
+
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Map<String, String>> procesarValidacionException(MethodArgumentNotValidException exception) {
@@ -33,6 +34,7 @@ public class GlobalExeceptionHandler {
 
         return new ApiResponse<>("Errores de validación", HttpStatus.BAD_REQUEST.value(), errorMessages);
     }
+
     @ExceptionHandler(ClienteExistenteException.class)
     public ResponseEntity<ApiResponse<String>> handleDuplicateEmailException(ClienteExistenteException e) {
         ApiResponse<String> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.value(), null);
