@@ -13,14 +13,4 @@ public class ToClienteSalida {
     private String apellido;
     private Long cedula;
 
-
-    @Override
-    public String toString() {
-        return "ToClienteSalida{" +
-                "idCliente=" + idCliente +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", cedula=" + cedula +
-                '}';
-    }
 }

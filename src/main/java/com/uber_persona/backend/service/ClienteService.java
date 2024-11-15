@@ -8,6 +8,8 @@ import com.uber_persona.backend.exception.ClienteExistenteException;
 import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.interfaces.ICliente;
 import com.uber_persona.backend.repository.ClienteRepository;
+import com.uber_persona.backend.util.SalidaJson;
+import com.uber_persona.backend.util.Va;
 import io.micrometer.core.instrument.distribution.FixedBoundaryVictoriaMetricsHistogram;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 @Transactional
 @AllArgsConstructor
 public class ClienteService implements ICliente {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
+
     private final ClienteRepository clienteRepository;
     private final ModelMapper modelMapper;
 
@@ -35,9 +37,8 @@ public class ClienteService implements ICliente {
             throw new ClienteExistenteException("La cédula ya existe en el sistema");
         }
         Cliente clienteCreado = clienteRepository.save(cliente);
-        LOGGER.info("Cliente creado con ID: " + clienteCreado.getIdCliente());
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
-        LOGGER.info("DTO generado: " + toClienteSalida);
+        Va.info("Cliente: "+ "\n"+SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 

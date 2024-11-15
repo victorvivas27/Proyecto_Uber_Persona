@@ -7,7 +7,6 @@ import com.uber_persona.backend.service.ClienteService;
 import com.uber_persona.backend.util.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.hibernate.MappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,9 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/cliente")
 public class ClienteController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ClienteController.class);
     private final ClienteService clienteService;
-
     @PostMapping("/crear")
     public ResponseEntity<?> crearCliente(@RequestBody @Valid ToClienteEntrada toClienteEntrada) {
         ToClienteSalida toClienteSalida = clienteService.crearCliente(toClienteEntrada);
@@ -34,30 +31,18 @@ public class ClienteController {
 
     @GetMapping("/listar")
     public ResponseEntity<ApiResponse<List<ToClienteSalida>>> listarClientes() {
-        try {
-            List<ToClienteSalida> toClienteSalidas = clienteService.listarClientes();
-            ApiResponse<List<ToClienteSalida>> response =
-                    new ApiResponse<>("Lista de clientes exitosa", HttpStatus.OK.value(), toClienteSalidas);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-
-        } catch (MappingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), null));
-        }
+        List<ToClienteSalida> toClienteSalidas = clienteService.listarClientes();
+        ApiResponse<List<ToClienteSalida>> response =
+                new ApiResponse<>("Lista de clientes exitosa", HttpStatus.OK.value(), toClienteSalidas);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/buscar/{idCliente}")
-    public ResponseEntity<ApiResponse<ToClienteSalida>>buscarClienteID(@PathVariable Long idCliente){
-        try {
-            ToClienteSalida toClienteSalida = clienteService.obtenerClientePorId(idCliente);
-            ApiResponse<ToClienteSalida> response =
-                    new ApiResponse<>("Cliente encontrado", HttpStatus.OK.value(), toClienteSalida);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-
-        } catch ( ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                   .body(new ApiResponse<>(e.getMessage(), HttpStatus.NOT_FOUND.value(), null));
-        }
+    public ResponseEntity<ApiResponse<ToClienteSalida>> buscarClienteID(@PathVariable Long idCliente) throws ResourceNotFoundException {
+        ToClienteSalida toClienteSalida = clienteService.obtenerClientePorId(idCliente);
+        ApiResponse<ToClienteSalida> response = new ApiResponse<>(
+                "Cliente encontrado", HttpStatus.OK.value(), toClienteSalida);
+        return ResponseEntity.ok(response);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.uber_persona.backend.abstractclasses;
 
+import com.uber_persona.backend.util.Va;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +14,10 @@ public abstract class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
-    @Column(name = "NOMBRE", length = 100, nullable = false)
+    @Column(name = Va.NOMBRE, length = 100, nullable = false)
     private String nombre;
-    @Column(name = "APELLIDO", length = 100, nullable = false)
+    @Column(name = Va.APELLIDO, length = 100, nullable = false)
     private String apellido;
-    @Column(name = "CEDULA", length = 15, nullable = false, unique = true)
+    @Column(name = Va.CEDULA, length = 15, nullable = false, unique = true)
     private Long cedula;
 }
