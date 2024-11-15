@@ -1,5 +1,6 @@
 package com.uber_persona.backend.dto.entrada;
 
+import com.uber_persona.backend.util.Va;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -12,16 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ToClienteEntrada {
-    @NotNull(message = "El nombre es obligatorio")
-    @Size(min = 2, max = 50, message = "El nombre debe tener entre {min} y {max} caracteres")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "El nombre solo debe contener letras, acentos y espacios")
+    @NotNull(message = Va.NOMBRE_NOTNULL)
+    @Size(min = 2, max = 50, message = Va.NOMBRE_SIZE)
+    @Pattern(regexp = Va.CLIENTE_REGEXP, message =Va.NOMBRE_PATTERN )
     private String nombre;
-    @NotNull(message = "El apellido es obligatorio")
-    @Size(min = 2, max = 100, message = "El apellido debe tener entre {min} y {max} caracteres")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "El apellido solo debe contener letras, acentos y espacios")
+    @NotNull(message = Va.APELLIDO_NOTNULL)
+    @Size(min = 2, max = 100, message = Va.APELLIDO_SIZE)
+    @Pattern(regexp = Va.CLIENTE_REGEXP, message = Va.APELLIDO_PATTERN)
     private String apellido;
-    @NotNull(message = "La cédula es obligatoria")
-    @Digits(integer = 10, fraction = 0, message = "La cédula debe tener entre 9 y 10 dígitos numéricos")
+    @NotNull(message =Va.CEDULA_NOTNULL)
+    @Digits(integer = 10, fraction = 0, message = Va.NOMBRE_SIZE)
     private Long cedula;
 
 }
