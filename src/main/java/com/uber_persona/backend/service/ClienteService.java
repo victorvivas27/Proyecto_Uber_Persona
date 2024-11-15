@@ -59,8 +59,19 @@ public class ClienteService implements ICliente {
     }
 
     @Override
-    public ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) {
-        return null;
+    public ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException {
+        Long cedula = toClienteModificar.getCedula();
+        Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente())
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el cliente con ID: " + toClienteModificar.getIdCliente()));
+        if (clienteRepository.existsByCedulaAndIdClienteNot(cedula, cliente.getIdCliente())) {
+            throw new ClienteExistenteException("La cédula ya existe en el sistema");
+        }
+        modelMapper.map(toClienteModificar, cliente);
+        clienteRepository.save(cliente);
+        ToClienteSalida toClienteSalida = modelMapper.map(cliente, ToClienteSalida.class);
+        Va.info("Cliente actualizado: " + SalidaJson.toString(toClienteSalida));
+
+        return toClienteSalida;
     }
 
     @Override

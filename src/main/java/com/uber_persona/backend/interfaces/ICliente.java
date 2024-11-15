@@ -14,7 +14,7 @@ public interface ICliente {
 
     ToClienteSalida obtenerClientePorId(Long idCliente) throws ResourceNotFoundException;
 
-    ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar);
+    ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException;
 
     void eliminarCliente(Long idCliente);
 }
