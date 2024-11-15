@@ -31,19 +31,18 @@ public class ClienteService implements ICliente {
         Long cedula = toClienteEntrada.getCedula();
         Cliente cliente = modelMapper.map(toClienteEntrada, Cliente.class);
         if (clienteRepository.existsByCedula(cedula)) {
-            throw new ClienteExistenteException("La cédula ya existe en el sistema");
+            throw new ClienteExistenteException(Va.CEDULA_YA_EXISTE);
         }
         Cliente clienteCreado = clienteRepository.save(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
-        Va.info("Cliente: " + "\n" + SalidaJson.toString(toClienteSalida));
+        Va.info(Va.CLIENTE + "\n" + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 
     @Override
     public List<ToClienteSalida> listarClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
-        return clientes.stream().map(cliente -> modelMapper.map(cliente, ToClienteSalida.class))
-                .collect(Collectors.toList());
+        return clientes.stream().map(cliente -> modelMapper.map(cliente, ToClienteSalida.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ClienteService implements ICliente {
         if (cliente != null) {
             toClienteSalida = modelMapper.map(cliente, ToClienteSalida.class);
         } else {
-            throw new ResourceNotFoundException("No se encontró el cliente con ID: " + idCliente);
+            throw new ResourceNotFoundException(Va.CLIENTE_ID_NO_ENCONTRADO + idCliente);
         }
         return toClienteSalida;
     }
@@ -61,24 +60,22 @@ public class ClienteService implements ICliente {
     @Override
     public ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException {
         Long cedula = toClienteModificar.getCedula();
-        Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente())
-                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el cliente con ID: " + toClienteModificar.getIdCliente()));
+        Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente()).orElseThrow(() -> new ResourceNotFoundException(Va.CLIENTE_ID_NO_ENCONTRADO + toClienteModificar.getIdCliente()));
         if (clienteRepository.existsByCedulaAndIdClienteNot(cedula, cliente.getIdCliente())) {
-            throw new ClienteExistenteException("La cédula ya existe en el sistema");
+            throw new ClienteExistenteException(Va.CEDULA_YA_EXISTE);
         }
         modelMapper.map(toClienteModificar, cliente);
         clienteRepository.save(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(cliente, ToClienteSalida.class);
-        Va.info("Cliente actualizado: " + SalidaJson.toString(toClienteSalida));
-
+        Va.info(Va.CLIENTE_MODIFICADO + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 
     @Override
     public void eliminarCliente(Long idCliente) throws ResourceNotFoundException {
-        Cliente cliente = clienteRepository.findById(idCliente)
-                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el cliente con ID: " + idCliente));
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> new ResourceNotFoundException(Va.CLIENTE_ID_NO_ENCONTRADO + idCliente));
         clienteRepository.deleteById(idCliente);
-        Va.info("Cliente eliminado con ID: " + idCliente);
+        Va.info(Va.CLIENTE_ELIMINADO + idCliente);
     }
+
 }
