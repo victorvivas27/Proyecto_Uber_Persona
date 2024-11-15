@@ -75,6 +75,10 @@ public class ClienteService implements ICliente {
     }
 
     @Override
-    public void eliminarCliente(Long idCliente) {
+    public void eliminarCliente(Long idCliente) throws ResourceNotFoundException {
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el cliente con ID: " + idCliente));
+        clienteRepository.deleteById(idCliente);
+        Va.info("Cliente eliminado con ID: " + idCliente);
     }
 }

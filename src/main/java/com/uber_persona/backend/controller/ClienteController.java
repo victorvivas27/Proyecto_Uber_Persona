@@ -53,6 +53,13 @@ public class ClienteController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/eliminar/{idCliente}")
+    public ResponseEntity<ApiResponse<Long>> eliminarCliente(@PathVariable Long idCliente) throws ResourceNotFoundException {
+        clienteService.eliminarCliente(idCliente);
+        ApiResponse<Long> response = new ApiResponse<>("Cliente eliminado", HttpStatus.OK.value(), idCliente);
+        return ResponseEntity.ok(response);
+    }
+
 }
 
 
