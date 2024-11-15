@@ -12,7 +12,7 @@ public interface ICliente {
 
     List<ToClienteSalida> listarClientes();
 
-    ToClienteSalida gobtenerClientePorId(Long idCliente) throws ResourceNotFoundException;
+    ToClienteSalida obtenerClientePorId(Long idCliente) throws ResourceNotFoundException;
 
     ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException;
 
