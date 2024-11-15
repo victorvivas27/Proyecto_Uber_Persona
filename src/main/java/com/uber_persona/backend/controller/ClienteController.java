@@ -7,8 +7,6 @@ import com.uber_persona.backend.service.ClienteService;
 import com.uber_persona.backend.util.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/cliente")
 public class ClienteController {
     private final ClienteService clienteService;
+
     @PostMapping("/crear")
     public ResponseEntity<?> crearCliente(@RequestBody @Valid ToClienteEntrada toClienteEntrada) {
         ToClienteSalida toClienteSalida = clienteService.crearCliente(toClienteEntrada);
