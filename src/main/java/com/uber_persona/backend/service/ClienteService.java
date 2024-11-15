@@ -10,12 +10,9 @@ import com.uber_persona.backend.interfaces.ICliente;
 import com.uber_persona.backend.repository.ClienteRepository;
 import com.uber_persona.backend.util.SalidaJson;
 import com.uber_persona.backend.util.Va;
-import io.micrometer.core.instrument.distribution.FixedBoundaryVictoriaMetricsHistogram;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +35,7 @@ public class ClienteService implements ICliente {
         }
         Cliente clienteCreado = clienteRepository.save(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
-        Va.info("Cliente: "+ "\n"+SalidaJson.toString(toClienteSalida));
+        Va.info("Cliente: " + "\n" + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 
@@ -50,10 +47,10 @@ public class ClienteService implements ICliente {
     }
 
     @Override
-    public ToClienteSalida obtenerClientePorId(Long idCliente)throws ResourceNotFoundException {
-        Cliente cliente= clienteRepository.findById(idCliente).orElse(null);
-        ToClienteSalida toClienteSalida= null;
-        if (cliente!= null) {
+    public ToClienteSalida obtenerClientePorId(Long idCliente) throws ResourceNotFoundException {
+        Cliente cliente = clienteRepository.findById(idCliente).orElse(null);
+        ToClienteSalida toClienteSalida = null;
+        if (cliente != null) {
             toClienteSalida = modelMapper.map(cliente, ToClienteSalida.class);
         } else {
             throw new ResourceNotFoundException("No se encontró el cliente con ID: " + idCliente);
