@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ToConductorSalida {
-    private Long idCliente;
+    private Long idConductor;
     private String nombre;
     private String apellido;
     private Long cedula;
