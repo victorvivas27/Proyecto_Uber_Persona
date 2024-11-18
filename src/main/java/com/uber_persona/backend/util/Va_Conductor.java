@@ -11,6 +11,7 @@ public class Va_Conductor {
     public static final String CONDUCTOR_ID_NOTNULL = "El idConductor es obligatorio";
     public static final String CONDUCTOR_LICENCIA_CONDUCIR = "la imagenes de la licencia es obligatoria";
     public static final String CONDUCTOR_LICENCIA_URL = "La licencia de conducir debe ser una URL válida";
+    public static final String CONDUCTOR_ID_NO_ENCONTRADO = "No se encontró el conductor con ID: ";
 
 
 }
