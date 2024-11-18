@@ -16,6 +16,6 @@ public class Conductor extends Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idConductor;
-    @Column(name = "LICENCIA_CONDUCIR", nullable = false, length = 100)
+    @Column(name = Va_Conductor.LICENCIA, nullable = false, length = 100)
     private String licenciaConducir;
 }
