@@ -35,8 +35,8 @@ public class GlobalExeceptionHandler {
         return new ApiResponse<>("Errores de validación", HttpStatus.BAD_REQUEST.value(), errorMessages);
     }
 
-    @ExceptionHandler(ClienteExistenteException.class)
-    public ResponseEntity<ApiResponse<String>> handleDuplicateEmailException(ClienteExistenteException e) {
+    @ExceptionHandler(CedulaExistenteException.class)
+    public ResponseEntity<ApiResponse<String>> handleDuplicateEmailException(CedulaExistenteException e) {
         ApiResponse<String> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.value(), null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
