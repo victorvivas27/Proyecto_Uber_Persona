@@ -7,7 +7,6 @@ import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.interfaces.IConductorController;
 import com.uber_persona.backend.service.ConductorServise;
 import com.uber_persona.backend.util.ApiResponse;
-import com.uber_persona.backend.util.Va_Cliente;
 import com.uber_persona.backend.util.Va_Conductor;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -57,7 +56,7 @@ public class ConductorController implements IConductorController {
 
     @Override
     @DeleteMapping("/eliminar/{idConductor}")
-    public ResponseEntity<ApiResponse<Long>> eliminarConductor( @PathVariable Long idConductor) throws ResourceNotFoundException {
+    public ResponseEntity<ApiResponse<Long>> eliminarConductor(@PathVariable Long idConductor) throws ResourceNotFoundException {
         conductorServise.eliminarConductor(idConductor);
         ApiResponse<Long> response = new ApiResponse<>(Va_Conductor.CONDUCTOR_ELIMINADO, HttpStatus.OK.value(), idConductor);
         return ResponseEntity.ok(response);
