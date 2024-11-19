@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -27,10 +26,10 @@ public class ConductorServise implements IConductor {
     @Override
     public ToConductorSalida crearConductor(ToConductorEntrada toConductorEntrada) {
         Long cedula = toConductorEntrada.getCedula();
-        Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
         if (conductorRepository.existsByCedula(cedula)) {
             throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
         }
+        Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
         Conductor conductorCreado = conductorRepository.save(conductor);
         ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
         Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
@@ -40,7 +39,8 @@ public class ConductorServise implements IConductor {
     @Override
     public List<ToConductorSalida> listarConductor() {
         List<Conductor> conductores = conductorRepository.findAll();
-        return conductores.stream().map(conductor -> modelMapper.map(conductor, ToConductorSalida.class)).collect(Collectors.toList());
+        return conductores.stream()
+                .map(conductor -> modelMapper.map(conductor, ToConductorSalida.class)).toList();
     }
 
     @Override

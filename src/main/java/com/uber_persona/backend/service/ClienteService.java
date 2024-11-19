@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,10 +29,10 @@ public class ClienteService implements ICliente {
     @Override
     public ToClienteSalida crearCliente(ToClienteEntrada toClienteEntrada) {
         Long cedula = toClienteEntrada.getCedula();
-        Cliente cliente = modelMapper.map(toClienteEntrada, Cliente.class);
         if (clienteRepository.existsByCedula(cedula)) {
             throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
         }
+        Cliente cliente = modelMapper.map(toClienteEntrada, Cliente.class);
         Cliente clienteCreado = clienteRepository.save(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
         Va_Persona.info(Va_Cliente.CLIENTE + "\n" + SalidaJson.toString(toClienteSalida));
@@ -43,7 +42,8 @@ public class ClienteService implements ICliente {
     @Override
     public List<ToClienteSalida> listarClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
-        return clientes.stream().map(cliente -> modelMapper.map(cliente, ToClienteSalida.class)).collect(Collectors.toList());
+        return clientes.stream()
+                .map(cliente -> modelMapper.map(cliente, ToClienteSalida.class)).toList();
     }
 
     @Override
@@ -61,7 +61,8 @@ public class ClienteService implements ICliente {
     @Override
     public ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException {
         Long cedula = toClienteModificar.getCedula();
-        Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente()).orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + toClienteModificar.getIdCliente()));
+        Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente())
+                .orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + toClienteModificar.getIdCliente()));
         if (clienteRepository.existsByCedulaAndIdClienteNot(cedula, cliente.getIdCliente())) {
             throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
         }
@@ -74,9 +75,9 @@ public class ClienteService implements ICliente {
 
     @Override
     public void eliminarCliente(Long idCliente) throws ResourceNotFoundException {
-        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + idCliente));
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + idCliente));
         clienteRepository.deleteById(idCliente);
         Va_Persona.info(Va_Cliente.CLIENTE_ELIMINADO + idCliente);
     }
-
 }
