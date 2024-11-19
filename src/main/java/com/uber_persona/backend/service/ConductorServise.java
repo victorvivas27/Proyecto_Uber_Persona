@@ -22,18 +22,15 @@ import java.util.List;
 public class ConductorServise implements IConductor {
     private final ConductorRepository conductorRepository;
     private final ModelMapper modelMapper;
+    private final ConductorServiceSave conductorRepositorySave;
 
     @Override
     public ToConductorSalida crearConductor(ToConductorEntrada toConductorEntrada) {
-        Long cedula = toConductorEntrada.getCedula();
-        if (conductorRepository.existsByCedula(cedula)) {
-            throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
-        }
-        Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
-        Conductor conductorCreado = conductorRepository.save(conductor);
-        ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
-        Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
-        return toConductorSalida;
+     Conductor conductor =modelMapper.map(toConductorEntrada,Conductor.class);
+     Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
+     ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
+     Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
+     return toConductorSalida;
     }
 
     @Override

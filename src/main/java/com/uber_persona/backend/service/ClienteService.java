@@ -22,18 +22,14 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 public class ClienteService implements ICliente {
-
     private final ClienteRepository clienteRepository;
     private final ModelMapper modelMapper;
+    private  final ClienteServiceSave clienteServiceSave;
 
     @Override
     public ToClienteSalida crearCliente(ToClienteEntrada toClienteEntrada) {
-        Long cedula = toClienteEntrada.getCedula();
-        if (clienteRepository.existsByCedula(cedula)) {
-            throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
-        }
         Cliente cliente = modelMapper.map(toClienteEntrada, Cliente.class);
-        Cliente clienteCreado = clienteRepository.save(cliente);
+        Cliente clienteCreado = clienteServiceSave.crearCliente(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
         Va_Persona.info(Va_Cliente.CLIENTE + "\n" + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
