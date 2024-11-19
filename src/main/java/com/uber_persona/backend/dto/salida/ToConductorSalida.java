@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ToClienteSalida {
-    private Long idCliente;
+public class ToConductorSalida {
+    private Long idConductor;
     private String nombre;
     private String apellido;
     private Long cedula;
-
+    private String licenciaConducir;
 }

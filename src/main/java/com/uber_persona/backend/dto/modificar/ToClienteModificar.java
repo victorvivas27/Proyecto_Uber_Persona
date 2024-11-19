@@ -1,6 +1,9 @@
 package com.uber_persona.backend.dto.modificar;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.uber_persona.backend.util.Va_Cliente;
+import com.uber_persona.backend.util.Va_Persona;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,18 +16,18 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ToClienteModificar {
-    @NotNull(message = "El idCliente es obligatorio")
+    @NotNull(message = Va_Cliente.CLIENTE_ID_NOTNULL)
     private Long idCliente;
-    @NotNull(message = "El nombre es obligatorio")
-    @Size(min = 2, max = 50, message = "El nombre debe tener entre {min} y {max} caracteres")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "El nombre solo debe contener letras, acentos y espacios")
+    @NotNull(message = Va_Persona.NOMBRE_NOT_NULL)
+    @Size(min = 2, max = 50, message = Va_Persona.NOMBRE_SIZE)
+    @Pattern(regexp = Va_Persona.NOMBRE_REGEXP, message = Va_Persona.NOMBRE_PATTERN)
     private String nombre;
-    @NotNull(message = "El apellido es obligatorio")
-    @Size(min = 2, max = 100, message = "El apellido debe tener entre {min} y {max} caracteres")
-    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "El apellido solo debe contener letras, acentos y espacios")
+    @NotNull(message = Va_Persona.APELLIDO_NOT_NULL)
+    @Size(min = 2, max = 100, message = Va_Persona.APELLIDO_SIZE)
+    @Pattern(regexp = Va_Persona.APELLIDO_REGEXP, message = Va_Persona.APELLIDO_PATTERN)
     private String apellido;
-    @NotNull(message = "La cédula es obligatoria")
-    @Pattern(regexp = "^[0-9]{9,10}$", message = "La cédula debe tener entre 9 y 10 dígitos numéricos")
+    @NotNull(message = Va_Persona.CEDULA_NOT_NULL)
+    @Digits(integer = 10, fraction = 0, message = Va_Persona.CEDULA_SIZE)
     private Long cedula;
 
 }
