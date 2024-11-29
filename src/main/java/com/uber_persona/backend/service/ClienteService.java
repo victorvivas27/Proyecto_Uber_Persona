@@ -14,6 +14,8 @@ import com.uber_persona.backend.util.Va_Persona;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 public class ClienteService implements ICliente {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
     private final ClienteRepository clienteRepository;
     private final ModelMapper modelMapper;
     private final ClienteServiceSave clienteServiceSave;
@@ -31,7 +34,7 @@ public class ClienteService implements ICliente {
         Cliente cliente = modelMapper.map(toClienteEntrada, Cliente.class);
         Cliente clienteCreado = clienteServiceSave.crearCliente(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(clienteCreado, ToClienteSalida.class);
-        Va_Persona.info(Va_Cliente.CLIENTE + "\n" + SalidaJson.toString(toClienteSalida));
+        LOGGER.info(Va_Cliente.CLIENTE + "\n" + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 
@@ -65,7 +68,7 @@ public class ClienteService implements ICliente {
         modelMapper.map(toClienteModificar, cliente);
         clienteRepository.save(cliente);
         ToClienteSalida toClienteSalida = modelMapper.map(cliente, ToClienteSalida.class);
-        Va_Persona.info(Va_Cliente.CLIENTE_MODIFICADO + SalidaJson.toString(toClienteSalida));
+        LOGGER.info(Va_Cliente.CLIENTE_MODIFICADO + SalidaJson.toString(toClienteSalida));
         return toClienteSalida;
     }
 
@@ -74,6 +77,6 @@ public class ClienteService implements ICliente {
         Cliente cliente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + idCliente));
         clienteRepository.deleteById(idCliente);
-        Va_Persona.info(Va_Cliente.CLIENTE_ELIMINADO + idCliente);
+        LOGGER.info(Va_Cliente.CLIENTE_ELIMINADO + idCliente);
     }
 }
