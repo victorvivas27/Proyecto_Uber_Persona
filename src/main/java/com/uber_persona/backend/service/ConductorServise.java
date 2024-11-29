@@ -26,11 +26,11 @@ public class ConductorServise implements IConductor {
 
     @Override
     public ToConductorSalida crearConductor(ToConductorEntrada toConductorEntrada) {
-     Conductor conductor =modelMapper.map(toConductorEntrada,Conductor.class);
-     Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
-     ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
-     Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
-     return toConductorSalida;
+        Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
+        Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
+        ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
+        Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
+        return toConductorSalida;
     }
 
     @Override
