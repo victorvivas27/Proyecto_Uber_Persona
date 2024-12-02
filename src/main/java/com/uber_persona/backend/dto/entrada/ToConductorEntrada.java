@@ -1,7 +1,7 @@
 package com.uber_persona.backend.dto.entrada;
 
-import com.uber_persona.backend.util.Va_Conductor;
-import com.uber_persona.backend.util.Va_Persona;
+import com.uber_persona.backend.util.ConstantesConductor;
+import com.uber_persona.backend.util.ConstantesPersona;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,18 +15,18 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor
 @Data
 public class ToConductorEntrada {
-    @NotNull(message = Va_Persona.NOMBRE_NOT_NULL)
-    @Size(min = 2, max = 50, message = Va_Persona.NOMBRE_SIZE)
-    @Pattern(regexp = Va_Persona.NOMBRE_REGEXP, message = Va_Persona.NOMBRE_PATTERN)
+    @NotNull(message = ConstantesPersona.NOMBRE_NOT_NULL)
+    @Size(min = 2, max = 50, message = ConstantesPersona.NOMBRE_SIZE)
+    @Pattern(regexp = ConstantesPersona.NOMBRE_REGEXP, message = ConstantesPersona.NOMBRE_PATTERN)
     private String nombre;
-    @NotNull(message = Va_Persona.APELLIDO_NOT_NULL)
-    @Size(min = 2, max = 100, message = Va_Persona.APELLIDO_SIZE)
-    @Pattern(regexp = Va_Persona.APELLIDO_REGEXP, message = Va_Persona.APELLIDO_PATTERN)
+    @NotNull(message = ConstantesPersona.APELLIDO_NOT_NULL)
+    @Size(min = 2, max = 100, message = ConstantesPersona.APELLIDO_SIZE)
+    @Pattern(regexp = ConstantesPersona.APELLIDO_REGEXP, message = ConstantesPersona.APELLIDO_PATTERN)
     private String apellido;
-    @NotNull(message = Va_Persona.CEDULA_NOT_NULL)
-    @Digits(integer = 10, fraction = 0, message = Va_Persona.NOMBRE_SIZE)
+    @NotNull(message = ConstantesPersona.CEDULA_NOT_NULL)
+    @Digits(integer = 10, fraction = 0, message = ConstantesPersona.NOMBRE_SIZE)
     private Long cedula;
-    @NotNull(message = Va_Conductor.CONDUCTOR_LICENCIA_CONDUCIR)
-    @URL(message = Va_Conductor.CONDUCTOR_LICENCIA_URL)
+    @NotNull(message = ConstantesConductor.CONDUCTOR_LICENCIA_CONDUCIR)
+    @URL(message = ConstantesConductor.CONDUCTOR_LICENCIA_URL)
     private String licenciaConducir;
 }

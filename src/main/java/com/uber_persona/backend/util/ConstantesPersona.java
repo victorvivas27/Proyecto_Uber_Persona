@@ -1,6 +1,6 @@
 package com.uber_persona.backend.util;
 
-public class Va_Persona {
+public class ConstantesPersona {
     public static final String NOMBRE_NOT_NULL = "El nombre es obligatorio";
     public static final String NOMBRE_SIZE = "El nombre debe tener entre {min} y {max} caracteres";
     public static final String NOMBRE_PATTERN = "El nombre solo debe contener letras, acentos y espacios";

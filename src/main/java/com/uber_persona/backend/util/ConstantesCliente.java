@@ -1,6 +1,6 @@
 package com.uber_persona.backend.util;
 
-public class Va_Cliente {
+public class ConstantesCliente {
 
     public static final String CLIENTES = "CLIENTES";
     public static final String CLIENTE = "Cliente: ";

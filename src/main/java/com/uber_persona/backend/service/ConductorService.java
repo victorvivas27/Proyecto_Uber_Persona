@@ -9,8 +9,8 @@ import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.interfaces.IConductor;
 import com.uber_persona.backend.repository.ConductorRepository;
 import com.uber_persona.backend.util.SalidaJson;
-import com.uber_persona.backend.util.Va_Conductor;
-import com.uber_persona.backend.util.Va_Persona;
+import com.uber_persona.backend.util.ConstantesConductor;
+import com.uber_persona.backend.util.ConstantesPersona;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class ConductorService implements IConductor {
         Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
         Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
         ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
-        LOGGER.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
+        LOGGER.info(ConstantesConductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
         return toConductorSalida;
     }
 
@@ -50,7 +50,7 @@ public class ConductorService implements IConductor {
         if (conductor != null) {
             toConductorSalida = modelMapper.map(conductor, ToConductorSalida.class);
         } else {
-            throw new ResourceNotFoundException(Va_Conductor.CONDUCTOR_ID_NO_ENCONTRADO + idConductor);
+            throw new ResourceNotFoundException(ConstantesConductor.CONDUCTOR_ID_NO_ENCONTRADO + idConductor);
         }
         return toConductorSalida;
     }
@@ -59,22 +59,22 @@ public class ConductorService implements IConductor {
     public ToConductorSalida actualizarConductor(ToConductorModificar toConductorModificar) throws ResourceNotFoundException {
         Long cedula = toConductorModificar.getCedula();
         Conductor conductor = conductorRepository.findById(toConductorModificar.getIdConductor())
-                .orElseThrow(() -> new ResourceNotFoundException(Va_Conductor.CONDUCTOR_ID_NO_ENCONTRADO + toConductorModificar.getIdConductor()));
+                .orElseThrow(() -> new ResourceNotFoundException(ConstantesConductor.CONDUCTOR_ID_NO_ENCONTRADO + toConductorModificar.getIdConductor()));
         if (conductorRepository.existsByCedulaAndIdConductorNot(cedula, conductor.getIdConductor())) {
-            throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
+            throw new CedulaExistenteException(ConstantesPersona.CEDULA_YA_EXISTE);
         }
         modelMapper.map(toConductorModificar, conductor);
         conductorRepository.save(conductor);
         ToConductorSalida toConductorSalida = modelMapper.map(conductor, ToConductorSalida.class);
-        LOGGER.info(Va_Conductor.CONDUCTOR_MODIFICADO + SalidaJson.toString(toConductorSalida));
+        LOGGER.info(ConstantesConductor.CONDUCTOR_MODIFICADO + SalidaJson.toString(toConductorSalida));
         return toConductorSalida;
     }
 
     @Override
     public void eliminarConductor(Long idConductor) throws ResourceNotFoundException {
         Conductor conductor = conductorRepository.findById(idConductor)
-                .orElseThrow(() -> new ResourceNotFoundException(Va_Conductor.CONDUCTOR_ID_NO_ENCONTRADO + idConductor));
+                .orElseThrow(() -> new ResourceNotFoundException(ConstantesConductor.CONDUCTOR_ID_NO_ENCONTRADO + idConductor));
         conductorRepository.deleteById(idConductor);
-        LOGGER.info(Va_Conductor.CONDUCTOR_ELIMINADO + idConductor);
+        LOGGER.info(ConstantesConductor.CONDUCTOR_ELIMINADO + idConductor);
     }
 }
