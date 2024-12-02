@@ -16,15 +16,24 @@ class ClienteRepositoryTest {
     @Autowired
     private ClienteRepository clienteRepository;
     private Cliente cliente;
+    private Cliente cliente2;
+
+
 
     @BeforeEach
     void setUp() {
-        clienteRepository.deleteAll(); // Limpia la base de datos
+        clienteRepository.deleteAll();
         cliente = new Cliente();
         cliente.setCedula(123456789L);
         cliente.setNombre("John");
         cliente.setApellido("Doe");
-        cliente = clienteRepository.save(cliente);
+        clienteRepository.save(cliente);
+        cliente2 = new Cliente();
+        cliente2.setCedula(987654321L);
+        cliente2.setNombre("Jane");
+        cliente2.setApellido("Smith");
+        clienteRepository.save(cliente2);
+
     }
 
     @Test
@@ -41,17 +50,17 @@ class ClienteRepositoryTest {
 
     @Test
     void deberiaDevolverFalseSiElClienteConCedulaYIdNoCoincide() {
-        boolean exists = clienteRepository.existsByCedulaAndIdClienteNot(987654321L, cliente.getIdCliente());
+        boolean exists = clienteRepository.existsByCedulaAndIdClienteNot(123456789L, 1L);
         assertFalse(exists, "No debería encontrar un cliente con la cédula 987654321 y un ID distinto");
+
     }
 
     @Test
     void deberiaLanzarExcepcionSiSeInsertaClienteConCedulaDuplicada() {
         Cliente clienteDuplicado = new Cliente();
-        clienteDuplicado.setCedula(123456789L); // Cédula duplicada
+        clienteDuplicado.setCedula(123456789L);
         clienteDuplicado.setNombre("Jane");
         clienteDuplicado.setApellido("Smith");
-
         assertThrows(DataIntegrityViolationException.class,
                 () -> clienteRepository.save(clienteDuplicado),
                 "Debería lanzarse una excepción al intentar guardar un cliente con cédula duplicada");
