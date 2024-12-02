@@ -13,24 +13,27 @@ import com.uber_persona.backend.util.Va_Conductor;
 import com.uber_persona.backend.util.Va_Persona;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ConductorServise implements IConductor {
+public class ConductorService implements IConductor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConductorService.class);
     private final ConductorRepository conductorRepository;
     private final ModelMapper modelMapper;
     private final ConductorServiceSave conductorRepositorySave;
 
     @Override
     public ToConductorSalida crearConductor(ToConductorEntrada toConductorEntrada) {
-     Conductor conductor =modelMapper.map(toConductorEntrada,Conductor.class);
-     Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
-     ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
-     Va_Persona.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
-     return toConductorSalida;
+        Conductor conductor = modelMapper.map(toConductorEntrada, Conductor.class);
+        Conductor conductorCreado = conductorRepositorySave.crearConductor(conductor);
+        ToConductorSalida toConductorSalida = modelMapper.map(conductorCreado, ToConductorSalida.class);
+        LOGGER.info(Va_Conductor.CONDUCTOR + "\n" + SalidaJson.toString(toConductorSalida));
+        return toConductorSalida;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class ConductorServise implements IConductor {
         modelMapper.map(toConductorModificar, conductor);
         conductorRepository.save(conductor);
         ToConductorSalida toConductorSalida = modelMapper.map(conductor, ToConductorSalida.class);
-        Va_Persona.info(Va_Conductor.CONDUCTOR_MODIFICADO + SalidaJson.toString(toConductorSalida));
+        LOGGER.info(Va_Conductor.CONDUCTOR_MODIFICADO + SalidaJson.toString(toConductorSalida));
         return toConductorSalida;
     }
 
@@ -72,6 +75,6 @@ public class ConductorServise implements IConductor {
         Conductor conductor = conductorRepository.findById(idConductor)
                 .orElseThrow(() -> new ResourceNotFoundException(Va_Conductor.CONDUCTOR_ID_NO_ENCONTRADO + idConductor));
         conductorRepository.deleteById(idConductor);
-        Va_Persona.info(Va_Conductor.CONDUCTOR_ELIMINADO + idConductor);
+        LOGGER.info(Va_Conductor.CONDUCTOR_ELIMINADO + idConductor);
     }
 }

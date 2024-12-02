@@ -1,0 +1,63 @@
+server:
+  port: 5050
+spring:
+  main:
+    banner-mode: console
+  profiles:
+    active: dev
+    application:
+      name: UberPersona
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+---
+spring:
+  config:
+    active:
+      on-profile: qa
+jpa:
+  hibernate:
+    ddl-auto: create-drop
+  show-sql: true
+  open-in-view: false
+  properties:
+    hibernate:
+      format_sql: true
+  database-platform: org.hibernate.dialect.H2Dialect
+h2:
+  console:
+    enabled: true
+    path: /h2-console
+datasource:
+  driver-class-name: org.h2.Driver
+  url: jdbc:h2:mem:testdb
+  username: sa
+  password: sa
+
+---
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: ERROR
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%cyan(%thread)] %magenta(%logger{15}) - %msg%n"

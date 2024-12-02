@@ -5,7 +5,7 @@ import com.uber_persona.backend.dto.modificar.ToConductorModificar;
 import com.uber_persona.backend.dto.salida.ToConductorSalida;
 import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.interfaces.IConductorController;
-import com.uber_persona.backend.service.ConductorServise;
+import com.uber_persona.backend.service.ConductorService;
 import com.uber_persona.backend.util.ApiResponse;
 import com.uber_persona.backend.util.Va_Conductor;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/conductor")
 public class ConductorController implements IConductorController {
-    private final ConductorServise conductorServise;
+    private final ConductorService conductorServise;
 
     @Override
     @PostMapping("/crear")

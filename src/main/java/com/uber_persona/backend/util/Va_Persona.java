@@ -1,8 +1,5 @@
 package com.uber_persona.backend.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class Va_Persona {
     public static final String NOMBRE_NOT_NULL = "El nombre es obligatorio";
     public static final String NOMBRE_SIZE = "El nombre debe tener entre {min} y {max} caracteres";
@@ -18,9 +15,5 @@ public class Va_Persona {
     public static final String APELLIDO = "APELLIDO";
     public static final String CEDULA = "CEDULA";
     public static final String CEDULA_YA_EXISTE = "La cédula ya existe en el sistema";
-    private static final Logger LOGGER = LoggerFactory.getLogger("ApplicationLogger");
 
-    public static void info(String message) {
-        LOGGER.info(message);
-    }
 }
