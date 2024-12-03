@@ -1,8 +1,6 @@
 package com.uber_persona.backend.dto.entrada;
 
-import com.uber_persona.backend.util.ConstantesConductor;
-import com.uber_persona.backend.util.ConstantesPersona;
-import jakarta.validation.constraints.Digits;
+import com.uber_persona.backend.validation.ExactDigits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -14,19 +12,25 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class ToConductorEntrada {
-    @NotNull(message = ConstantesPersona.NOMBRE_NOT_NULL)
-    @Size(min = 2, max = 50, message = ConstantesPersona.NOMBRE_SIZE)
-    @Pattern(regexp = ConstantesPersona.NOMBRE_REGEXP, message = ConstantesPersona.NOMBRE_PATTERN)
+
+    @NotNull(message = "{validation.persona.name.not_null}")
+    @Size(min = 2, max = 50, message = "{validation.persona.name.size}")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "{validation.persona.nombre.pattern}")
     private String nombre;
-    @NotNull(message = ConstantesPersona.APELLIDO_NOT_NULL)
-    @Size(min = 2, max = 100, message = ConstantesPersona.APELLIDO_SIZE)
-    @Pattern(regexp = ConstantesPersona.APELLIDO_REGEXP, message = ConstantesPersona.APELLIDO_PATTERN)
+
+    @NotNull(message = "{validation.persona.last_name.not_null}")
+    @Size(min = 2, max = 50, message = "{validation.persona.last_name.size}")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "{validation.persona.last_name.pattern}")
     private String apellido;
-    @NotNull(message = ConstantesPersona.CEDULA_NOT_NULL)
-    @Digits(integer = 10, fraction = 0, message = ConstantesPersona.NOMBRE_SIZE)
+
+    @NotNull(message = "{validation.persona.cedula.not_null}")
+    @ExactDigits(value = 8, message = "{validation.persona.cedula.size}")
     private Long cedula;
-    @NotNull(message = ConstantesConductor.CONDUCTOR_LICENCIA_CONDUCIR)
-    @URL(message = ConstantesConductor.CONDUCTOR_LICENCIA_URL)
+
+    @NotNull(message = "{validation.conductor.licencia.not_null}")
+    @URL(message = "{validation.conductor.licencia.url}")
+    @Size(max = 240, message = "{validation.conductor.licencia.url.size}")
     private String licenciaConducir;
 }

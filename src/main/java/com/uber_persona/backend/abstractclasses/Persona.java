@@ -1,6 +1,6 @@
 package com.uber_persona.backend.abstractclasses;
 
-import com.uber_persona.backend.util.ConstantesPersona;
+import com.uber_persona.backend.constants.ConstantePersona;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public abstract class Persona {
-    @Column(name = ConstantesPersona.NOMBRE, length = 100, nullable = false)
+    @Column(name = ConstantePersona.NOMBRE, length = 100, nullable = false)
     private String nombre;
-    @Column(name = ConstantesPersona.APELLIDO, length = 100, nullable = false)
+
+    @Column(name = ConstantePersona.APELLIDO, length = 100, nullable = false)
     private String apellido;
-    @Column(name = ConstantesPersona.CEDULA, length = 15, nullable = false, unique = true)
+
+    @Column(name = ConstantePersona.CEDULA, length = 15, nullable = false, unique = true)
     private Long cedula;
 }

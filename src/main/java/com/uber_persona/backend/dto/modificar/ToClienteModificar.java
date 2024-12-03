@@ -1,9 +1,7 @@
 package com.uber_persona.backend.dto.modificar;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.uber_persona.backend.util.ConstantesCliente;
-import com.uber_persona.backend.util.ConstantesPersona;
-import jakarta.validation.constraints.Digits;
+import com.uber_persona.backend.validation.ExactDigits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -16,18 +14,22 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ToClienteModificar {
-    @NotNull(message = ConstantesCliente.CLIENTE_ID_NOTNULL)
+
+    @NotNull(message = "{validation.client.cliente_id_not_null}")
     private Long idCliente;
-    @NotNull(message = ConstantesPersona.NOMBRE_NOT_NULL)
-    @Size(min = 2, max = 50, message = ConstantesPersona.NOMBRE_SIZE)
-    @Pattern(regexp = ConstantesPersona.NOMBRE_REGEXP, message = ConstantesPersona.NOMBRE_PATTERN)
+
+    @NotNull(message = "{validation.persona.name.not_null}")
+    @Size(min = 2, max = 50, message = "{validation.persona.name.size}")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "{validation.persona.nombre.pattern}")
     private String nombre;
-    @NotNull(message = ConstantesPersona.APELLIDO_NOT_NULL)
-    @Size(min = 2, max = 100, message = ConstantesPersona.APELLIDO_SIZE)
-    @Pattern(regexp = ConstantesPersona.APELLIDO_REGEXP, message = ConstantesPersona.APELLIDO_PATTERN)
+
+    @NotNull(message = "{validation.persona.last_name.not_null}")
+    @Size(min = 2, max = 50, message = "{validation.persona.last_name.size}")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$", message = "{validation.persona.last_name.pattern}")
     private String apellido;
 
-    @Digits(integer = 10, fraction = 0, message = ConstantesPersona.CEDULA_SIZE)
+
+    @ExactDigits(value = 8, message = "{validation.persona.cedula.size}")
     private Long cedula;
 
 }

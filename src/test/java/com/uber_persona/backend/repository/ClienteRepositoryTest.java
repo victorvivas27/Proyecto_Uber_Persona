@@ -19,7 +19,6 @@ class ClienteRepositoryTest {
     private Cliente cliente2;
 
 
-
     @BeforeEach
     void setUp() {
         clienteRepository.deleteAll();
