@@ -17,4 +17,5 @@ public class Cliente extends Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
+
 }
