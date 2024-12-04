@@ -1,6 +1,7 @@
 package com.uber_persona.backend.controller;
 
 import com.uber_persona.backend.dto.entrada.ToClienteEntrada;
+import com.uber_persona.backend.dto.modificar.ToClienteModificar;
 import com.uber_persona.backend.dto.salida.ToClienteSalida;
 import com.uber_persona.backend.exception.ResourceNotFoundException;
 import com.uber_persona.backend.service.ClienteService;
@@ -67,6 +68,21 @@ class ClienteControllerTest {
         assertNotNull(buscarClienteId);
         assertEquals(200, buscarClienteId.getStatusCode().value());
         assertSame(toClienteSalida, buscarClienteId.getBody().getData());
+    }
+    @Test
+    void testClienteModificar() throws ResourceNotFoundException {
+        ToClienteModificar toClienteModificar = ToClienteModificar.builder().build();
+        ToClienteSalida toClienteSalida = ToClienteSalida.builder().build();
+
+        when(clienteService.actualizarCliente(toClienteModificar)).thenReturn(toClienteSalida);
+        ResponseEntity<ApiResponse<ToClienteSalida>> modificarCliente= clienteController
+                .modificarCLiente(toClienteModificar);
+
+        assertNotNull(toClienteModificar);
+        assertEquals(200,modificarCliente.getStatusCode().value());
+        assertSame(toClienteSalida,modificarCliente.getBody().getData());
+        assertEquals("Cliente modificado",modificarCliente.getBody().getMessage());
+        assertFalse(toClienteModificar.equals(toClienteSalida));
     }
 
 }
