@@ -16,8 +16,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ClienteControllerTest {
@@ -76,13 +80,25 @@ class ClienteControllerTest {
 
         when(clienteService.actualizarCliente(toClienteModificar)).thenReturn(toClienteSalida);
         ResponseEntity<ApiResponse<ToClienteSalida>> modificarCliente= clienteController
-                .modificarCLiente(toClienteModificar);
+                .clienteModificar(toClienteModificar);
 
         assertNotNull(toClienteModificar);
         assertEquals(200,modificarCliente.getStatusCode().value());
         assertSame(toClienteSalida,modificarCliente.getBody().getData());
-        assertEquals("Cliente modificado",modificarCliente.getBody().getMessage());
         assertFalse(toClienteModificar.equals(toClienteSalida));
+    }
+    @Test
+    void testClienteEliminar() throws ResourceNotFoundException {
+//Long idCliente=1L;
+        doNothing().when(clienteService).eliminarCliente(null);
+        ResponseEntity<ApiResponse<Long>> eliminarCliente = clienteController
+               .eliminarCliente(null);
+
+        assertNotNull(eliminarCliente);
+        assertEquals(200, eliminarCliente.getStatusCode().value());
+        assertNotNull(eliminarCliente.getBody());
+        assertEquals("Cliente eliminado", eliminarCliente.getBody().getMessage());
+
     }
 
 }

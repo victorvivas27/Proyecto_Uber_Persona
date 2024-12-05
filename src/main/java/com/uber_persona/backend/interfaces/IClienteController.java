@@ -20,7 +20,7 @@ public interface IClienteController {
 
     ResponseEntity<ApiResponse<ToClienteSalida>> buscarClienteID(@PathVariable Long idCliente) throws ResourceNotFoundException;
 
-    ResponseEntity<ApiResponse<ToClienteSalida>> modificarCLiente(@RequestBody @Valid ToClienteModificar toClienteModificar) throws ResourceNotFoundException;
+    ResponseEntity<ApiResponse<ToClienteSalida>> clienteModificar(@RequestBody @Valid ToClienteModificar toClienteModificar) throws ResourceNotFoundException;
 
     ResponseEntity<ApiResponse<Long>> eliminarCliente(@PathVariable Long idCliente) throws ResourceNotFoundException;
 }
