@@ -16,12 +16,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ClienteControllerTest {
@@ -73,26 +70,28 @@ class ClienteControllerTest {
         assertEquals(200, buscarClienteId.getStatusCode().value());
         assertSame(toClienteSalida, buscarClienteId.getBody().getData());
     }
+
     @Test
     void testClienteModificar() throws ResourceNotFoundException {
         ToClienteModificar toClienteModificar = ToClienteModificar.builder().build();
         ToClienteSalida toClienteSalida = ToClienteSalida.builder().build();
 
         when(clienteService.actualizarCliente(toClienteModificar)).thenReturn(toClienteSalida);
-        ResponseEntity<ApiResponse<ToClienteSalida>> modificarCliente= clienteController
+        ResponseEntity<ApiResponse<ToClienteSalida>> modificarCliente = clienteController
                 .clienteModificar(toClienteModificar);
 
         assertNotNull(toClienteModificar);
-        assertEquals(200,modificarCliente.getStatusCode().value());
-        assertSame(toClienteSalida,modificarCliente.getBody().getData());
+        assertEquals(200, modificarCliente.getStatusCode().value());
+        assertSame(toClienteSalida, modificarCliente.getBody().getData());
         assertFalse(toClienteModificar.equals(toClienteSalida));
     }
+
     @Test
     void testClienteEliminar() throws ResourceNotFoundException {
 //Long idCliente=1L;
         doNothing().when(clienteService).eliminarCliente(null);
         ResponseEntity<ApiResponse<Long>> eliminarCliente = clienteController
-               .eliminarCliente(null);
+                .eliminarCliente(null);
 
         assertNotNull(eliminarCliente);
         assertEquals(200, eliminarCliente.getStatusCode().value());
