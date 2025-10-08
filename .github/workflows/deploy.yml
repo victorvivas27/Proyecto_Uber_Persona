@@ -10,7 +10,7 @@ env:
   REGION: us-central1                           # 👈 Región de despliegue
   PROJECT_ID: uber-victor-api                   # 👈 ID de tu proyecto en Google Cloud
   REPO: apps-uber                               # 👈 Nombre del repositorio en Artifact Registry
-  IMAGE: uber-victor                            # 👈 Nombre de la imagen (puede ser igual al servicio)
+  IMAGE: uber-victor:v1                            # 👈 Nombre de la imagen (puede ser igual al servicio)
 
 jobs:
   build-and-deploy:
