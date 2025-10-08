@@ -10,7 +10,7 @@ env:
   REGION: us-central1                           # 👈 Región de despliegue
   PROJECT_ID: uber-victor-api                   # 👈 ID de tu proyecto en Google Cloud
   REPO: apps-uber                               # 👈 Nombre del repositorio en Artifact Registry
-  IMAGE: uber-victor:v1                            # 👈 Nombre de la imagen (puede ser igual al servicio)
+  IMAGE: uber-victor                            # 👈 Nombre de la imagen (puede ser igual al servicio)
 
 jobs:
   build-and-deploy:
@@ -47,16 +47,16 @@ jobs:
 
       - name: 🧱 Construir imagen Docker
         run: |
-          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:latest .
+          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 .
 
       - name: 📦 Push de imagen al Artifact Registry
         run: |
-          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:latest
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1
 
       - name: 🚀 Desplegar en Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE }} \
-            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:latest \
+            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 \
             --region ${{ env.REGION }} \
             --allow-unauthenticated \
             --port 5050 \
