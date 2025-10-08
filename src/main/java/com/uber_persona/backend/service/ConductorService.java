@@ -1,6 +1,6 @@
 package com.uber_persona.backend.service;
 
-import com.uber_persona.backend.dto.entrada.ToConductorEntrada;
+import com.uber_persona.backend.dto.entrada.conductor.ToConductorEntrada;
 import com.uber_persona.backend.dto.modificar.ToConductorModificar;
 import com.uber_persona.backend.dto.salida.ToConductorSalida;
 import com.uber_persona.backend.entity.Conductor;
@@ -57,7 +57,7 @@ public class ConductorService implements IConductor {
 
     @Override
     public ToConductorSalida actualizarConductor(ToConductorModificar toConductorModificar) throws ResourceNotFoundException {
-        Long cedula = toConductorModificar.getCedula();
+        String cedula = toConductorModificar.getCedula();
         Conductor conductor = conductorRepository.findById(toConductorModificar.getIdConductor())
                 .orElseThrow(() -> new ResourceNotFoundException(Va_Conductor.CONDUCTOR_ID_NO_ENCONTRADO + toConductorModificar.getIdConductor()));
         if (conductorRepository.existsByCedulaAndIdConductorNot(cedula, conductor.getIdConductor())) {

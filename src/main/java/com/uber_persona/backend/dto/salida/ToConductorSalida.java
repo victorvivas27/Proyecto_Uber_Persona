@@ -13,6 +13,6 @@ public class ToConductorSalida {
     private Long idConductor;
     private String nombre;
     private String apellido;
-    private Long cedula;
+    private String cedula;
     private String licenciaConducir;
 }

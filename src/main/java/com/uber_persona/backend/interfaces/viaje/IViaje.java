@@ -1,6 +1,5 @@
 package com.uber_persona.backend.interfaces.viaje;
 
-import com.uber_persona.backend.dto.entrada.ToViajeEntrada;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeAsignar;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeCrear;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeFinalizar;

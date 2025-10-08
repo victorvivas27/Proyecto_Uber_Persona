@@ -1,6 +1,6 @@
 package com.uber_persona.backend.service;
 
-import com.uber_persona.backend.dto.entrada.ToClienteEntrada;
+import com.uber_persona.backend.dto.entrada.cliente.ToClienteEntrada;
 import com.uber_persona.backend.dto.modificar.ToClienteModificar;
 import com.uber_persona.backend.dto.salida.ToClienteSalida;
 import com.uber_persona.backend.entity.Cliente;
@@ -59,7 +59,7 @@ public class ClienteService implements ICliente {
 
     @Override
     public ToClienteSalida actualizarCliente(ToClienteModificar toClienteModificar) throws ResourceNotFoundException {
-        Long cedula = toClienteModificar.getCedula();
+        String cedula = toClienteModificar.getCedula();
         Cliente cliente = clienteRepository.findById(toClienteModificar.getIdCliente())
                 .orElseThrow(() -> new ResourceNotFoundException(Va_Cliente.CLIENTE_ID_NO_ENCONTRADO + toClienteModificar.getIdCliente()));
         if (clienteRepository.existsByCedulaAndIdClienteNot(cedula, cliente.getIdCliente())) {

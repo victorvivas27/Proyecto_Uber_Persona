@@ -1,4 +1,4 @@
-package com.uber_persona.backend.dto.entrada;
+package com.uber_persona.backend.dto.entrada.viaje;
 
 import com.uber_persona.backend.util.EstadoViaje;
 import jakarta.validation.constraints.*;

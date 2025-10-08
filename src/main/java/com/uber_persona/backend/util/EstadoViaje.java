@@ -10,6 +10,7 @@ public enum EstadoViaje {
     EN_CURSO,
     FINALIZADO,
     CANCELADO;
+
     @JsonCreator
     public static EstadoViaje fromString(String value) {
         for (EstadoViaje estado : EstadoViaje.values()) {

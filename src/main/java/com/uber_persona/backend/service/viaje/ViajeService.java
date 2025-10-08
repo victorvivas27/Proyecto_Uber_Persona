@@ -1,6 +1,5 @@
 package com.uber_persona.backend.service.viaje;
 
-import com.uber_persona.backend.dto.entrada.ToViajeEntrada;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeAsignar;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeCrear;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeFinalizar;
@@ -24,8 +23,8 @@ import java.time.LocalDateTime;
 public class ViajeService implements IViaje {
     private final ViajeRepository viajeRepository;
     private final ModelMapper modelMapper;
-    private  final ViajeServiceSave viajeServiceSave;
-    private  final ViajeMapper viajeMapper;
+    private final ViajeServiceSave viajeServiceSave;
+    private final ViajeMapper viajeMapper;
     private final ConductorRepository conductorRepository;
 
 

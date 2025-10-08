@@ -4,15 +4,14 @@ import com.uber_persona.backend.dto.salida.ToClienteSalida;
 import com.uber_persona.backend.dto.salida.ToConductorSalida;
 import com.uber_persona.backend.dto.salida.ToViajeSalida;
 import com.uber_persona.backend.entity.Viaje;
-import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ViajeMapper {
 
-    public ToViajeSalida toViajeSalida(Viaje viaje){
+    public ToViajeSalida toViajeSalida(Viaje viaje) {
 
-        ToClienteSalida clienteSalida=ToClienteSalida.builder()
+        ToClienteSalida clienteSalida = ToClienteSalida.builder()
                 .idCliente(viaje.getCliente().getIdCliente())
                 .nombre(viaje.getCliente().getNombre())
                 .apellido(viaje.getCliente().getApellido())
@@ -39,7 +38,7 @@ public class ViajeMapper {
                 .estado(viaje.getEstado())
                 .build();
 
-       return viajeSalida;
+        return viajeSalida;
 
 
     }

@@ -1,11 +1,7 @@
 package com.uber_persona.backend.dto.salida;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +13,6 @@ public class ToClienteSalida {
     private Long idCliente;
     private String nombre;
     private String apellido;
-    private Long cedula;
+    private String cedula;
 
 }

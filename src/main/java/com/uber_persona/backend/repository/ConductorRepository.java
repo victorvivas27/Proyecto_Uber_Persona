@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConductorRepository extends JpaRepository<Conductor, Long> {
-    boolean existsByCedula(Long cedula);
+    boolean existsByCedula(String cedula);
 
-    boolean existsByCedulaAndIdConductorNot(Long cedula, Long idConductor);
+    boolean existsByCedulaAndIdConductorNot(String cedula, Long idConductor);
 }
