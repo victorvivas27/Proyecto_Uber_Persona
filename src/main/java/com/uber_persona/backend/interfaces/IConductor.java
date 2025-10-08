@@ -1,6 +1,6 @@
 package com.uber_persona.backend.interfaces;
 
-import com.uber_persona.backend.dto.entrada.ToConductorEntrada;
+import com.uber_persona.backend.dto.entrada.conductor.ToConductorEntrada;
 import com.uber_persona.backend.dto.modificar.ToConductorModificar;
 import com.uber_persona.backend.dto.salida.ToConductorSalida;
 import com.uber_persona.backend.exception.ResourceNotFoundException;

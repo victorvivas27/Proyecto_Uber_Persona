@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
 public class UberPersonaApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(UberPersonaApplication.class);
 

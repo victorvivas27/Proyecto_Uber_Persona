@@ -3,7 +3,6 @@ package com.uber_persona.backend.entity;
 import com.uber_persona.backend.util.EstadoViaje;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 

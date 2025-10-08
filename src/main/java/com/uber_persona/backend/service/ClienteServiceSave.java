@@ -15,7 +15,7 @@ public class ClienteServiceSave {
     private final ModelMapper modelMapper;
 
     public Cliente crearCliente(Cliente cliente) {
-        Long cedula = cliente.getCedula();
+        String cedula = cliente.getCedula();
         if (clienteRepository.existsByCedula(cedula)) {
             throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
 

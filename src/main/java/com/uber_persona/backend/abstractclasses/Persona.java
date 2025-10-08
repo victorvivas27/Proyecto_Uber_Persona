@@ -7,10 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Getter
 @Setter
 public abstract class Persona {
@@ -22,5 +24,5 @@ public abstract class Persona {
     private String apellido;
 
     @Column(name = Va_Persona.CEDULA, length = 15, nullable = false, unique = true)
-    private Long cedula;
+    private String cedula;
 }

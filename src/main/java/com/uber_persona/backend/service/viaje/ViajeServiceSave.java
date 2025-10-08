@@ -1,9 +1,7 @@
 package com.uber_persona.backend.service.viaje;
 
-import com.uber_persona.backend.dto.entrada.ToViajeEntrada;
 import com.uber_persona.backend.dto.entrada.viaje.ToViajeCrear;
 import com.uber_persona.backend.entity.Cliente;
-import com.uber_persona.backend.entity.Conductor;
 import com.uber_persona.backend.entity.Viaje;
 import com.uber_persona.backend.exception.EntidadNoEncontradaException;
 import com.uber_persona.backend.repository.ClienteRepository;
@@ -16,12 +14,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ViajeServiceSave {
-    private  final ViajeRepository viajeRepository;
-    private  final ClienteRepository clienteRepository;
-    private  final ConductorRepository conductorRepository;
-    private  final ModelMapper modelMapper;
+    private final ViajeRepository viajeRepository;
+    private final ClienteRepository clienteRepository;
+    private final ConductorRepository conductorRepository;
+    private final ModelMapper modelMapper;
 
-    public Viaje crearViaje(ToViajeCrear dto){
+    public Viaje crearViaje(ToViajeCrear dto) {
 
         Cliente cliente = clienteRepository.findById(dto.getIdCliente())
                 .orElseThrow(() -> new EntidadNoEncontradaException("Cliente no encontrado"));

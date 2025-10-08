@@ -1,4 +1,4 @@
-package com.uber_persona.backend.dto.entrada;
+package com.uber_persona.backend.dto.entrada.conductor;
 
 import com.uber_persona.backend.util.Va_Conductor;
 import com.uber_persona.backend.util.Va_Persona;
@@ -16,18 +16,19 @@ import org.hibernate.validator.constraints.URL;
 @Data
 public class ToConductorEntrada {
     @NotNull(message = Va_Persona.NOMBRE_NOT_NULL)
-    @Size(min = 2, max = 50, message = Va_Persona.NOMBRE_SIZE)
+    @Size(min = 2, max = 50, message = Va_Persona.NOMBRE_PATTERN)
     @Pattern(regexp = Va_Persona.NOMBRE_REGEXP, message = Va_Persona.NOMBRE_PATTERN)
     private String nombre;
 
     @NotNull(message = Va_Persona.APELLIDO_NOT_NULL)
-    @Size(min = 2, max = 100, message = Va_Persona.APELLIDO_SIZE)
+    @Size(min = 2, max = 100, message = Va_Persona.APELLIDO_PATTERN)
     @Pattern(regexp = Va_Persona.APELLIDO_REGEXP, message = Va_Persona.APELLIDO_PATTERN)
     private String apellido;
 
     @NotNull(message = Va_Persona.CEDULA_NOT_NULL)
-    @Digits(integer = 10, fraction = 0, message = Va_Persona.NOMBRE_SIZE)
-    private Long cedula;
+    @Pattern(regexp = "^[0-9]+$", message = Va_Persona.CEDULA_PATTERN)
+    @Size(min = 8, max = 8, message = Va_Persona.CEDULA_SIZE)
+    private String cedula;
 
     @NotNull(message = Va_Conductor.CONDUCTOR_LICENCIA_CONDUCIR)
     @URL(message = Va_Conductor.CONDUCTOR_LICENCIA_URL)

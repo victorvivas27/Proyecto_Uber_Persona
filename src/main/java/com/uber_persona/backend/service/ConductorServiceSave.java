@@ -15,7 +15,7 @@ public class ConductorServiceSave {
     private final ModelMapper modelMapper;
 
     public Conductor crearConductor(Conductor conductor) {
-        Long cedula = conductor.getCedula();
+        String cedula = conductor.getCedula();
         if (conductorRepository.existsByCedula(cedula)) {
             throw new CedulaExistenteException(Va_Persona.CEDULA_YA_EXISTE);
         }
