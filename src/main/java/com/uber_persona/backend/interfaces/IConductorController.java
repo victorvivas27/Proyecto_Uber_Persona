@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IConductorController {
+
     ResponseEntity<ApiResponse<ToConductorSalida>> crearConductor(ToConductorEntrada toConductorEntrada);
 
     ResponseEntity<ApiResponse<List<ToConductorSalida>>> listarConductor();

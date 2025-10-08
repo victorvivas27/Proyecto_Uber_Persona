@@ -40,4 +40,16 @@ public class GlobalExeceptionHandler {
         ApiResponse<String> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.value(), null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(EstadoViajeInvalidoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<String> manejarEstadoInvalido(EstadoViajeInvalidoException ex) {
+        return new ApiResponse<>(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), null);
+    }
+
+    @ExceptionHandler(EntidadNoEncontradaException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<String> manejarEntidadNoEncontrada(EntidadNoEncontradaException ex) {
+        return new ApiResponse<>(ex.getMessage(), HttpStatus.NOT_FOUND.value(), null);
+    }
 }

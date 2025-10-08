@@ -4,18 +4,23 @@ import com.uber_persona.backend.util.Va_Persona;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public abstract class Persona {
+
     @Column(name = Va_Persona.NOMBRE, length = 100, nullable = false)
     private String nombre;
+
     @Column(name = Va_Persona.APELLIDO, length = 100, nullable = false)
     private String apellido;
+
     @Column(name = Va_Persona.CEDULA, length = 15, nullable = false, unique = true)
     private Long cedula;
 }

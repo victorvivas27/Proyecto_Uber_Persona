@@ -1,12 +1,14 @@
 package com.uber_persona.backend.dto.salida;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ToConductorSalida {
     private Long idConductor;
     private String nombre;

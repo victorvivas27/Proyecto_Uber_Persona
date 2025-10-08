@@ -23,37 +23,40 @@ import java.util.List;
 public class ClienteController implements IClienteController {
     private final ClienteService clienteService;
 
-    @PostMapping("/crear")
+    @PostMapping()
     public ResponseEntity<ApiResponse<ToClienteSalida>> crearCliente(@RequestBody @Valid ToClienteEntrada toClienteEntrada) {
         ToClienteSalida toClienteSalida = clienteService.crearCliente(toClienteEntrada);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(Va_Cliente.CLIENTE_CREADO, HttpStatus.CREATED.value(), toClienteSalida));
+        return ApiResponse.build(Va_Cliente.CLIENTE_CREADO, HttpStatus.CREATED, toClienteSalida);
     }
 
-    @GetMapping("/listar")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<ToClienteSalida>>> listarClientes() {
         List<ToClienteSalida> toClienteSalidas = clienteService.listarClientes();
-        ApiResponse<List<ToClienteSalida>> response = new ApiResponse<>(Va_Cliente.LISTA_CLIENTE, HttpStatus.OK.value(), toClienteSalidas);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Cliente.LISTA_CLIENTE, HttpStatus.OK, toClienteSalidas);
     }
 
-    @GetMapping("/buscar/{idCliente}")
-    public ResponseEntity<ApiResponse<ToClienteSalida>> buscarClienteID(@PathVariable Long idCliente) throws ResourceNotFoundException {
+    @GetMapping("/{idCliente}")
+    public ResponseEntity<ApiResponse<ToClienteSalida>> buscarClienteID(@PathVariable Long idCliente)
+            throws ResourceNotFoundException {
         ToClienteSalida toClienteSalida = clienteService.obtenerClientePorId(idCliente);
-        ApiResponse<ToClienteSalida> response = new ApiResponse<>(Va_Cliente.CLIENTE_ENCONTRADO, HttpStatus.OK.value(), toClienteSalida);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Cliente.CLIENTE_ENCONTRADO, HttpStatus.OK, toClienteSalida);
+
+
     }
 
-    @PutMapping("/modificar")
-    public ResponseEntity<ApiResponse<ToClienteSalida>> modificarCLiente(@Valid @RequestBody ToClienteModificar toClienteModificar) throws ResourceNotFoundException {
+    @PutMapping()
+    public ResponseEntity<ApiResponse<ToClienteSalida>> modificarCLiente(@Valid @RequestBody ToClienteModificar toClienteModificar)
+            throws ResourceNotFoundException {
         ToClienteSalida toClienteSalida = clienteService.actualizarCliente(toClienteModificar);
-        ApiResponse<ToClienteSalida> response = new ApiResponse<>(Va_Cliente.CLIENTE_MODIFICADO, HttpStatus.OK.value(), toClienteSalida);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Cliente.CLIENTE_MODIFICADO, HttpStatus.OK, toClienteSalida);
+
     }
 
-    @DeleteMapping("/eliminar/{idCliente}")
-    public ResponseEntity<ApiResponse<Long>> eliminarCliente(@PathVariable Long idCliente) throws ResourceNotFoundException {
+    @DeleteMapping("/{idCliente}")
+    public ResponseEntity<ApiResponse<Long>> eliminarCliente(@PathVariable Long idCliente)
+            throws ResourceNotFoundException {
         clienteService.eliminarCliente(idCliente);
-        ApiResponse<Long> response = new ApiResponse<>(Va_Cliente.CLIENTE_ELIMINADO, HttpStatus.OK.value(), idCliente);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Cliente.CLIENTE_ELIMINADO, HttpStatus.OK, idCliente);
+
     }
 }

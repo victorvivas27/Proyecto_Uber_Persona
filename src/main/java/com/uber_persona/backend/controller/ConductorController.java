@@ -24,41 +24,47 @@ public class ConductorController implements IConductorController {
     private final ConductorService conductorServise;
 
     @Override
-    @PostMapping("/crear")
+    @PostMapping()
     public ResponseEntity<ApiResponse<ToConductorSalida>> crearConductor(@Valid @RequestBody ToConductorEntrada toConductorEntrada) {
         ToConductorSalida toConductorSalida = conductorServise.crearConductor(toConductorEntrada);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(Va_Conductor.CONDUCTOR_CREADO, HttpStatus.CREATED.value(), toConductorSalida));
+        return ApiResponse.build(Va_Conductor.CONDUCTOR_CREADO, HttpStatus.CREATED, toConductorSalida);
     }
 
     @Override
-    @GetMapping("/listar")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<ToConductorSalida>>> listarConductor() {
         List<ToConductorSalida> toConductorSalidas = conductorServise.listarConductor();
-        ApiResponse<List<ToConductorSalida>> response = new ApiResponse<>(Va_Conductor.LISTA_CONDUCTOR, HttpStatus.OK.value(), toConductorSalidas);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Conductor.LISTA_CONDUCTOR, HttpStatus.OK, toConductorSalidas);
+
     }
 
     @Override
-    @GetMapping("/buscar/{idConductor}")
-    public ResponseEntity<ApiResponse<ToConductorSalida>> buscarConductorID(@PathVariable Long idConductor) throws ResourceNotFoundException {
+    @GetMapping("/{idConductor}")
+    public ResponseEntity<ApiResponse<ToConductorSalida>> buscarConductorID(@PathVariable Long idConductor)
+            throws ResourceNotFoundException {
+
         ToConductorSalida toConductorSalida = conductorServise.obtenerConductorPorId(idConductor);
-        ApiResponse<ToConductorSalida> response = new ApiResponse<>(Va_Conductor.CONDUCTOR_ENCONTRADO, HttpStatus.OK.value(), toConductorSalida);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Conductor.CONDUCTOR_ENCONTRADO, HttpStatus.OK, toConductorSalida);
+
     }
 
     @Override
-    @PutMapping("/modificar")
-    public ResponseEntity<ApiResponse<ToConductorSalida>> modificarConductor(@Valid @RequestBody ToConductorModificar toConductorModificar) throws ResourceNotFoundException {
+    @PutMapping()
+    public ResponseEntity<ApiResponse<ToConductorSalida>> modificarConductor(@Valid @RequestBody ToConductorModificar toConductorModificar)
+            throws ResourceNotFoundException {
+
         ToConductorSalida toConductorSalida = conductorServise.actualizarConductor(toConductorModificar);
-        ApiResponse<ToConductorSalida> response = new ApiResponse<>(Va_Conductor.CONDUCTOR_MODIFICADO, HttpStatus.OK.value(), toConductorSalida);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Conductor.CONDUCTOR_MODIFICADO, HttpStatus.OK, toConductorSalida);
+
     }
 
     @Override
-    @DeleteMapping("/eliminar/{idConductor}")
-    public ResponseEntity<ApiResponse<Long>> eliminarConductor(@PathVariable Long idConductor) throws ResourceNotFoundException {
+    @DeleteMapping("/{idConductor}")
+    public ResponseEntity<ApiResponse<Long>> eliminarConductor(@PathVariable Long idConductor)
+            throws ResourceNotFoundException {
+
         conductorServise.eliminarConductor(idConductor);
-        ApiResponse<Long> response = new ApiResponse<>(Va_Conductor.CONDUCTOR_ELIMINADO, HttpStatus.OK.value(), idConductor);
-        return ResponseEntity.ok(response);
+        return ApiResponse.build(Va_Conductor.CONDUCTOR_ELIMINADO, HttpStatus.OK, idConductor);
+
     }
 }
