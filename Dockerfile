@@ -35,7 +35,7 @@ RUN mvn clean package -DskipTests
 #Crea una nueva imagen, esta vez mucho más liviana.
 #Usás eclipse-temurin:17-jdk-alpine, que es Java 17 sobre Alpine Linux (una distro mini, pesa unos ~80 MB).
 #👉 Esta segunda etapa no tiene Maven ni dependencias de compilación, solo lo necesario para correr Java.
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-slim
 
 # Crear usuario no root por seguridad
 #Crea un usuario y grupo dentro del contenedor (en vez de usar “root”).

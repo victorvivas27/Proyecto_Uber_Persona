@@ -3,13 +3,13 @@ name: 🚀 Deploy API Uber to Google Cloud Run
 on:
   push:
     branches:
-      - main        # 👈 Se ejecuta cuando hacés push al branch main
+      - main
 
 env:
   SERVICE: uber-victor
-  REGION: us-central1               # 🌎 Cloud Run
+  REGION: us-central1
   PROJECT_ID: uber-victor-api
-  REPO_REGION: southamerica-west1   # 🐳 Artifact Registry
+  REPO_REGION: southamerica-west1
   REPO: apps-uber
   IMAGE: uber-victor
 
