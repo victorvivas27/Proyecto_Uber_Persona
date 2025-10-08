@@ -6,19 +6,20 @@ on:
       - main        # 👈 Se ejecuta cuando hacés push al branch main
 
 env:
-  SERVICE: uber-victor                          # 👈 Nombre del servicio en Cloud Run
-  REGION: us-central1                           # 👈 Región de despliegue
-  PROJECT_ID: uber-victor-api                   # 👈 ID de tu proyecto en Google Cloud
-  REPO: apps-uber                               # 👈 Nombre del repositorio en Artifact Registry
-  IMAGE: uber-victor                            # 👈 Nombre de la imagen (puede ser igual al servicio)
+  SERVICE: uber-victor
+  REGION: us-central1               # 🌎 Cloud Run
+  PROJECT_ID: uber-victor-api
+  REPO_REGION: southamerica-west1   # 🐳 Artifact Registry
+  REPO: apps-uber
+  IMAGE: uber-victor
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest                      # Usa una VM Linux estándar de GitHub
+    runs-on: ubuntu-latest
 
     steps:
       - name: 🧩 Checkout del código
-        uses: actions/checkout@v4               # Descarga el repo para trabajar sobre él
+        uses: actions/checkout@v4
 
       - name: 🧰 Configurar Java y Maven
         uses: actions/setup-java@v4
@@ -27,7 +28,7 @@ jobs:
           java-version: '17'
 
       - name: ⚙️ Compilar el proyecto con Maven
-        run: mvn clean package -DskipTests      # Construye el .jar (sin correr tests si ya los validaste)
+        run: mvn clean package -DskipTests
 
       - name: 🐳 Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -35,7 +36,7 @@ jobs:
       - name: 🔐 Autenticar con Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}   # 👈 Tu clave JSON guardada en GitHub Secrets
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: ☁️ Configurar gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
@@ -43,22 +44,21 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
 
       - name: 🔑 Autenticación Docker con Artifact Registry
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+        run: gcloud auth configure-docker ${{ env.REPO_REGION }}-docker.pkg.dev --quiet
 
       - name: 🧱 Construir imagen Docker
         run: |
-          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 .
+          docker build -t ${{ env.REPO_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 .
 
       - name: 📦 Push de imagen al Artifact Registry
         run: |
-          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1
+          docker push ${{ env.REPO_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1
 
       - name: 🚀 Desplegar en Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE }} \
-            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 \
+            --image ${{ env.REPO_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO }}/${{ env.IMAGE }}:v1 \
             --region ${{ env.REGION }} \
             --allow-unauthenticated \
             --port 5050 \
             --set-env-vars DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-
